@@ -1,62 +1,55 @@
 import java.util.Scanner;
 
-public class LoginSystem {
+class LoginSystem {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner inputanji = new Scanner(System.in);
+        Admin admin = new Admin("Alpin", "202410370110247", "Admin247", "Password247");
+        Mahasiswa mahasiswa = new Mahasiswa("Alpin", "247");
 
-        String username = "Admin247";
-        String password = "Password247";
+        while (true) {
+            System.out.println("Pilih menu login: ");
+            System.out.println("1. Admin");
+            System.out.println("2. Mahasiswa");
+            System.out.println("3. Exit");
+            System.out.print("Masukkan pilihan: ");
 
-        String mhsUsername = "ALfin";
-        String nim = "202410370110247";
+            int pilihan = inputanji.nextInt();
+            inputanji.nextLine(); // Consume newline
 
-        System.out.println("Pilih Login: ");
-        System.out.println("1. Admin");
-        System.out.println("2. Mahasiswa");
-        System.out.print("Masukkan pilihan: ");
+            if (pilihan == 3) {
+                System.out.println("Exiting the system.");
+                break;
+            }
 
-        int choice;
+            if (pilihan != 1 && pilihan != 2) {
+                System.out.println("Pilihan tidak valid mas, dicobi maleh. \n");
+                continue;
+            }
 
-        if (input.hasNextInt()) {
-            choice = input.nextInt();
-            input.nextLine();
-        } else {
-            System.out.println("Erorrrrrrr");
-            input.close();
-            return;
-        }
+            if (pilihan == 1) {
+                System.out.print("Username: ");
+                String inputUsername = inputanji.nextLine();
+                System.out.print("Password: ");
+                String inputPassword = inputanji.nextLine();
 
-        if (choice == 1){
-            while (true){
-                System.out.print("Masukkan username: ");
-                String inputUsername = input.nextLine();
-                System.out.print("Masukkan password: ");
-                String inputPassword = input.nextLine();
-
-                if (inputUsername.equals(username) && inputPassword.equals(password)){
-                    System.out.println("Login Admin berhasil!");
-                    break;
+                if (admin.login(inputUsername, inputPassword)) {
+                    admin.displayInfo();
                 } else {
-                    System.out.println("Coba lagi kang");
+                    System.out.println("Login gagal. Silakan coba lagi.");
+                }
+            } else if (pilihan == 2) {
+                System.out.print("Nama: ");
+                String inputNama = inputanji.nextLine();
+                System.out.print("NIM: ");
+                String inputNim = inputanji.nextLine();
+
+                if (mahasiswa.login(inputNama, inputNim)) {
+                    mahasiswa.displayInfo();
+                } else {
+                    System.out.println("Login gagal mas. Silakan coba lagi.");
                 }
             }
-        } else if(choice == 2){
-            while (true){
-                System.out.print("Masukkan Nama: ");
-                String inputMhs = input.nextLine();
-                System.out.print("Masukkan NIM: ");
-                String inputNim = input.nextLine();
-
-                if (inputMhs.equals(mhsUsername) && inputNim.equals(nim)){
-                    System.out.println("Login Mahasiswa berhasil!");
-                    break;
-                } else {
-                    System.out.println("Coba meneh kang");
-                }
-            }
-        } else {
-            System.out.println("Inputmu Salahh kangg");
         }
-        input.close();
+        inputanji.close();
     }
 }
